@@ -3,19 +3,19 @@ if (!defined('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-Tx_Extbase_Utility_Extension::registerPlugin(
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
 	'Subscribe',
 	'Notify: Subscription component'
 );
 
-Tx_Extbase_Utility_Extension::registerPlugin(
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
 	'Subscriptions',
 	'Notify: Manage subscriptions'
 );
 
-Tx_Extbase_Utility_Extension::registerPlugin(
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	$_EXTKEY,
 	'Timeline',
 	'Notify: Timeline of updates'
@@ -37,10 +37,10 @@ Tx_Flux_Core::registerFluidFlexFormPlugin('notify', 'notify_timeline', $flexForm
 
 unset($templatePaths, $flexFormFile);
 
-t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Notification and subscription');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile($_EXTKEY, 'Configuration/TypoScript', 'Notification and subscription');
 
-t3lib_extMgm::addLLrefForTCAdescr('tx_notify_domain_model_subscription', 'EXT:notify/Resources/Private/Language/locallang_csh_tx_notify_domain_model_subscription.xml');
-t3lib_extMgm::allowTableOnStandardPages('tx_notify_domain_model_subscription');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_notify_domain_model_subscription', 'EXT:notify/Resources/Private/Language/locallang_csh_tx_notify_domain_model_subscription.xml');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_notify_domain_model_subscription');
 $TCA['tx_notify_domain_model_subscription'] = array(
 	'ctrl' => array(
 		'title'	=> 'LLL:EXT:notify/Resources/Private/Language/locallang_db.xml:tx_notify_domain_model_subscription',
@@ -62,8 +62,8 @@ $TCA['tx_notify_domain_model_subscription'] = array(
 			'starttime' => 'starttime',
 			'endtime' => 'endtime',
 		),
-		'dynamicConfigFile' => t3lib_extMgm::extPath($_EXTKEY) . 'Configuration/TCA/Subscription.php',
-		'iconfile' => t3lib_extMgm::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_notify_domain_model_subscription.gif'
+		'dynamicConfigFile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Configuration/TCA/Subscription.php',
+		'iconfile' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath($_EXTKEY) . 'Resources/Public/Icons/tx_notify_domain_model_subscription.gif'
 	),
 );
 

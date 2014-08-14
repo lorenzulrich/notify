@@ -2,15 +2,15 @@
 class Tx_Notify_Poller_AbstractPoller {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -21,11 +21,11 @@ class Tx_Notify_Poller_AbstractPoller {
 	 */
 	protected function getUpdatedObjectFromRecord(array $row, $table = NULL) {
 		/** @var $updatedObject Tx_Notify_Domain_Model_UpdatedObject */
-		$updatedObject = $this->objectManager->create('Tx_Notify_Domain_Model_UpdatedObject');
+		$updatedObject = $this->objectManager->get('Tx_Notify_Domain_Model_UpdatedObject');
 		if ($table !== NULL && isset($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['Tx_Notify_Extraction'][$table])) {
 			$extractorClassName = $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['Tx_Notify_Extraction'][$table];
 			/** @var $extractor Tx_Notify_Extraction_ExtractorInterface */
-			$extractor = $this->objectManager->create($extractorClassName);
+			$extractor = $this->objectManager->get($extractorClassName);
 			$title = $extractor->extractTitleFromRecord($row);
 			$content = $extractor->extractContentFromRecord($row);
 			$dateTime = $extractor->extractDateTimeFromRecord($row);

@@ -1,5 +1,4 @@
 {namespace flux=Tx_Flux_ViewHelpers}
-{namespace fed=Tx_Fed_ViewHelpers}
 {namespace notify=Tx_Notify_ViewHelpers}
 <f:section name="Configuration">
 	<flux:flexform id="notify" label="Subscriptions">
@@ -107,7 +106,7 @@
 	<f:render section="SubscriptionConfigurationMode" />
 	<flux:flexform.field.select name="settings.source.table" label="Table containing records. Save to reload with additional options." items="{notify:tables()}" requestUpdate="TRUE" />
 	<f:if condition="{settings.source.table}">
-		<f:if condition="{fed:data.sql(query: 'SELECT * FROM {settings.source.table} LIMIT 1')}">
+		<f:if condition="{notify:data.sql(query: 'SELECT * FROM {settings.source.table} LIMIT 1')}">
 			<flux:flexform.field.group name="settings.source.uid" label="Record from {settings.source.table} to subscribe to"
 				internalType="db" size="1" table="{settings.source.table}" allowed="{settings.source.table}" maxItems="1" suggest="TRUE" />
 			<flux:flexform.field.select name="settings.source.fields" label="Fields to monitor for changes" items="{notify:fields(table: settings.source.table)}"

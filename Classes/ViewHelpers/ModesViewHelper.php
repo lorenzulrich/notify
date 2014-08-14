@@ -27,7 +27,7 @@
  * @package Notify
  * @subpackage ViewHelpers
  */
-class Tx_Notify_ViewHelpers_ModesViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_Notify_ViewHelpers_ModesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @var Tx_Notify_Service_ConfigurationService
@@ -49,7 +49,7 @@ class Tx_Notify_ViewHelpers_ModesViewHelper extends Tx_Fluid_Core_ViewHelper_Abs
 		$modes = explode(',', $settings['source']['modes']);
 		$labels = array();
 		foreach ($modes as $index=>$mode) {
-			array_push($labels, Tx_Extbase_Utility_Localization::translate('source.modes.' . $mode, 'notify'));
+			array_push($labels, \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate('source.modes.' . $mode, 'notify'));
 			if ($index < count($modes) - 2) {
 				array_push($labels, ', ');
 			} else if ($index == count($modes) - 2) {

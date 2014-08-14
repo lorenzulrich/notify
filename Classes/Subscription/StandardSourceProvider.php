@@ -51,7 +51,7 @@ class Tx_Notify_Subscription_StandardSourceProvider implements Tx_Notify_Subscri
 	protected $configuration;
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
@@ -75,9 +75,9 @@ class Tx_Notify_Subscription_StandardSourceProvider implements Tx_Notify_Subscri
 	}
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
@@ -95,7 +95,7 @@ class Tx_Notify_Subscription_StandardSourceProvider implements Tx_Notify_Subscri
 	 * @return array
 	 */
 	public function getModes() {
-		return t3lib_div::trimExplode(',', $this->configuration['source']['modes']);
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $this->configuration['source']['modes']);
 	}
 
 	/**
@@ -149,7 +149,7 @@ class Tx_Notify_Subscription_StandardSourceProvider implements Tx_Notify_Subscri
 	 * Get all Subscriptions that apply to this Provider
 	 *
 	 * @param boolean $includeInactive If TRUE, includes inactive subscriptions
-	 * @return Tx_Extbase_Persistence_QueryResultInterface
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
 	public function getSubscriptions($includeInactive=FALSE) {
 		// Please note: casting and suppression below is done to support NOT NULL
@@ -195,7 +195,7 @@ class Tx_Notify_Subscription_StandardSourceProvider implements Tx_Notify_Subscri
 	 */
 	public function createSubscription($subscriber) {
 		/** @var Tx_Notify_Domain_Model_Subscription $subscription */
-		$subscription = $this->objectManager->create('Tx_Notify_Domain_Model_Subscription');
+		$subscription = $this->objectManager->get('Tx_Notify_Domain_Model_Subscription');
 		$subscription->setMode($this->configuration['source']['mode']);
 		$subscription->setSubscriber($subscriber);
 		$subscription->setActive(TRUE);
@@ -258,7 +258,7 @@ class Tx_Notify_Subscription_StandardSourceProvider implements Tx_Notify_Subscri
 	 */
 	public function getMessageInstance($subscriber) {
 		/** @var Tx_Notify_Message_FluidEmail $message */
-		$message = $this->objectManager->create('Tx_Notify_Message_FluidEmail');
+		$message = $this->objectManager->get('Tx_Notify_Message_FluidEmail');
 		$message->setRecipient($subscriber);
 		$message->setSender($this->configuration['email']['from']['name'] . ' <' . $this->configuration['email']['from']['email'] . '>');
 		$message->setSubject($this->configuration['email']['subject']);
@@ -295,7 +295,7 @@ class Tx_Notify_Subscription_StandardSourceProvider implements Tx_Notify_Subscri
 	 * @return void
 	 */
 	function __wakeup() {
-		$this->objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		$this->objectManager = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 		$this->configurationService = $this->objectManager->get('Tx_Notify_Service_ConfigurationService');
 		$this->subscriptionRepository = $this->objectManager->get('Tx_Notify_Domain_Repository_SubscriptionRepository');
 	}

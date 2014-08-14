@@ -1,7 +1,7 @@
-{namespace fed=Tx_Fed_ViewHelpers}
 {namespace notify=Tx_Notify_ViewHelpers}
+{namespace v=Tx_Vhs_ViewHelpers}
 
-<fed:data.var name="urlToggle"><f:widget.uri action="toggle" arguments="{subscription: subscription.uid}" ajax="TRUE" /></fed:data.var>
+<notify:data.var name="urlToggle"><f:widget.uri action="toggle" arguments="{subscription: subscription.uid}" ajax="TRUE" /></notify:data.var>
 
 <f:render section="{notify:ucfirst(string: settings.display.mode)}" optional="TRUE" arguments="{_all}" />
 
@@ -32,27 +32,27 @@
 	<f:render section="Subscriber" arguments="{_all}" />
 	<a class="link tx-notify subscribe component" href="javascript:;" data-rel="{urlToggle}"
 		{f:if(condition: settings.display.link.title, then: ' rel="tooltip" title="{settings.display.link.title}"')} >
-		<fed:exists file="{settings.display.image.subscribed}">
+		<v:media.exists file="{settings.display.image.subscribed}">
 			<f:if condition="{0: settings.display.image.position} == {0: 'left'}">
 				<f:image src="{toggleImage}" alt="" class="icon-asterisk" />
 			</f:if>
-		</fed:exists>
+		</v:media.exists>
 
 		<f:if condition="{isSubscribed}" then="{settings.display.link.subscribed}" else="{settings.display.link.unsubscribed}" />
 
-		<fed:exists file="{settings.display.image.subscribed}">
+		<v:media.exists file="{settings.display.image.subscribed}">
 			<f:if condition="{0: settings.display.image.position} == {0: 'left'}">
 				<f:else>
 					<f:image src="{toggleImage}" alt="" class="icon-asterisk" />
 				</f:else>
 			</f:if>
-		</fed:exists>
+		</v:media.exists>
 	</a>
 </f:section>
 
 <f:section name="Splitbutton">
-	<fed:data.var name="urlSubscribe"><f:widget.uri action="subscribe" ajax="TRUE" arguments="{urlArguments}" /></fed:data.var>
-	<fed:data.var name="urlUnsubscribe"><f:widget.uri action="unsubscribe" ajax="TRUE" arguments="{urlArguments}" /></fed:data.var>
+	<notify:data.var name="urlSubscribe"><f:widget.uri action="subscribe" ajax="TRUE" arguments="{urlArguments}" /></notify:data.var>
+	<notify:data.var name="urlUnsubscribe"><f:widget.uri action="unsubscribe" ajax="TRUE" arguments="{urlArguments}" /></notify:data.var>
 	<div class="btn-group">
 		<button class="splitbutton tx-notify subscribe component {settings.display.class.enabled} btn{f:if(condition: isSubscribed, else: ' btn-danger')}"
 			data-role="unsubscribe" data-rel="{urlToggle}">Off</button>
@@ -74,8 +74,8 @@
 
 <f:section name="Radio">
 	<f:render section="Subscriber" arguments="{_all}" />
-	<fed:data.var name="urlSubscribe"><f:widget.uri action="subscribe" ajax="TRUE" arguments="{subscription: subscription}" /></fed:data.var>
-	<fed:data.var name="urlUnsubscribe"><f:widget.uri action="unsubscribe" ajax="TRUE" arguments="{subscription: subscription}" /></fed:data.var>
+	<notify:data.var name="urlSubscribe"><f:widget.uri action="subscribe" ajax="TRUE" arguments="{subscription: subscription}" /></notify:data.var>
+	<notify:data.var name="urlUnsubscribe"><f:widget.uri action="unsubscribe" ajax="TRUE" arguments="{subscription: subscription}" /></notify:data.var>
 	<label class="radio">
 		<f:if condition="{0: settings.display.radio.position} == {0: 'right'}" then="{settings.display.link.subscribed}" />
 			<input class="radio tx-notify subscribe component" type="radio" name="sub{radioName}" value="1" {f:if(condition: isSubscribed, then: 'checked="checked"')} data-rel="{urlSubscribe}" />
@@ -90,7 +90,7 @@
 
 <f:section name="Bootstrapicon">
 	<f:render section="Subscriber" arguments="{_all}" />
-	<fed:comment comment="Note: although the 'left' and 'right' below look like they are reversed, this is the proper way ;)" />
+	<f:comment comment="Note: although the 'left' and 'right' below look like they are reversed, this is the proper way ;)" />
 	<a class="bootstrapicon tx-notify subscribe component" href="javascript:;" rel="tooltip" data-rel="{urlToggle}" title="{toggleLinkText}">
 		<f:if condition="{0: settings.display.bootstrapicon.position, 1: settings.display.bootstrapicon.noLabel} == {0: 'right', 1: 0}" then="{toggleLinkText}" />
 			<span class="icon-{f:if(condition: isSubscribed, then: settings.display.bootstrapicon.subscribed, else: settings.display.bootstrapicon.unsubscribed)}"></span>
@@ -111,14 +111,14 @@
 		<f:if condition="{0: settings.display.image.position} == {0: 'left'}" else="{toggleLinkText}" />
 		<f:if condition="{isSubscribed}">
 			<f:then>
-				<fed:exists file="{settings.display.image.subscribed}">
+				<v:media.exists file="{settings.display.image.subscribed}">
 					<f:image src="{toggleImage}" alt="" class="icon-asterisk" />
-				</fed:exists>
+				</v:media.exists>
 			</f:then>
 			<f:else>
-				<fed:exists file="{settings.display.image.unsubscribed}">
+				<v:media.exists file="{settings.display.image.unsubscribed}">
 					<f:image src="{settings.display.image.unsubscribed}" alt="{settings.display.link.unsubscribed}" class="icon-asterisk" />
-				</fed:exists>
+				</v:media.exists>
 			</f:else>
 		</f:if>
 		<f:if condition="{0: settings.display.image.position} == {0: 'left'}" then="{toggleLinkText}" />

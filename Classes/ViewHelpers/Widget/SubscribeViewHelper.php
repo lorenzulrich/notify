@@ -27,7 +27,7 @@
  * @package Notify
  * @subpackage ViewHelpers/Widget
  */
-class Tx_Notify_ViewHelpers_Widget_SubscribeViewHelper extends Tx_Fluidwidget_Core_Widget_AbstractWidgetViewHelper {
+class Tx_Notify_ViewHelpers_Widget_SubscribeViewHelper extends \TYPO3\CMS\Fluid\Core\Widget\AbstractWidgetViewHelper {
 
 	/**
 	 * @var bool
@@ -50,7 +50,7 @@ class Tx_Notify_ViewHelpers_Widget_SubscribeViewHelper extends Tx_Fluidwidget_Co
 	 * Initialize all actions
 	 */
 	public function initializeAction() {
-		$this->ajaxWidget = (bool) Tx_Extbase_Reflection_ObjectAccess::getPropertyPath($this->arguments['settings'], 'settings.display.ajax');
+		$this->ajaxWidget = (bool) \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getPropertyPath($this->arguments['settings'], 'settings.display.ajax');
 	}
 
 	/**
@@ -61,7 +61,7 @@ class Tx_Notify_ViewHelpers_Widget_SubscribeViewHelper extends Tx_Fluidwidget_Co
 		$this->registerArgument('settings', 'array', 'Settings for this Widget - same structure as TS plugin.tx_notify.settings');
 		$this->registerArgument('mode', 'integer', 'Mode of operation - 0=page, 1=record, 2=file/dir', FALSE);
 		$this->registerArgument('pageUid', 'integer', 'If mode=0 (page), uid of page that is to be subscribed. If empty and mode is page, current page id is used', FALSE);
-		$this->registerArgument('object', 'Tx_Extbase_DomainObject_DomainObjectInterface', 'If mode=1 (record) the table name and uid of this object is used for the subscription', FALSE);
+		$this->registerArgument('object', 'TYPO3\CMS\Extbase\DomainObject\DomainObjectInterface', 'If mode=1 (record) the table name and uid of this object is used for the subscription', FALSE);
 		$this->registerArgument('table', 'string', 'If mode=1 (record) and you did not specify an object and/or need to override the table name, specify it here', FALSE);
 		$this->registerArgument('fields', 'string', 'If mode=1 (record) and you only want to monitor specific fields for changes, fill it here. Note: this value makes a subscription unique, meaning that you can create multiple subscriptions for individual fields or sets of fields in a record - in short, you can bind this Widget to individual properties', FALSE);
 		$this->registerArgument('uid', 'integer', 'UID of the record that is to be subscribed to. Note: if both pageUid and uid is specified, pageUid takes precedence if mode=0 (page)', FALSE);

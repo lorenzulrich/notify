@@ -27,29 +27,29 @@
  * @package Notify
  * @subpackage Service
  */
-class Tx_Notify_Service_ConfigurationService extends Tx_Notify_Service_AbstractService implements t3lib_Singleton {
+class Tx_Notify_Service_ConfigurationService extends Tx_Notify_Service_AbstractService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @var Tx_Extbase_Service_FlexFormService
+	 * @var \TYPO3\CMS\Extbase\Service\FlexFormService
 	 */
 	protected $flexFormService;
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
 	/**
-	 * @param Tx_Extbase_Service_FlexFormService $flexFormService
+	 * @param \TYPO3\CMS\Extbase\Service\FlexFormService $flexFormService
 	 */
-	public function injectFlexFormService(Tx_Extbase_Service_FlexFormService $flexFormService) {
+	public function injectFlexFormService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexFormService) {
 		$this->flexFormService = $flexFormService;
 	}
 
@@ -71,13 +71,13 @@ class Tx_Notify_Service_ConfigurationService extends Tx_Notify_Service_AbstractS
 	 */
 	protected function getOverlayedSettingPath($path=NULL) {
 		$baseSettings = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['notify']['setup'];
-		$typoScriptSettings = (array) $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'notify', 'subscribe');
+		$typoScriptSettings = (array) $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS, 'notify', 'subscribe');
 		if ($this->configurationManager->getContentObject() instanceof tslib_cObj) {
 			$flexFormSettings = $this->flexFormService->convertFlexFormContentToArray($this->configurationManager->getContentObject()->data['pi_flexform']);
 		}
 		$settings = $this->mergeRecursiveIfNotEmpty($baseSettings, (array) $typoScriptSettings, (array) $flexFormSettings['settings']);
 		if ($path !== NULL) {
-			$settings = Tx_Extbase_Reflection_ObjectAccess::getPropertyPath($settings, $path);
+			$settings = \TYPO3\CMS\Extbase\Reflection\ObjectAccess::getPropertyPath($settings, $path);
 		}
 		return $settings;
 	}

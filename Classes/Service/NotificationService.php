@@ -22,6 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * @package Notify
@@ -47,12 +48,12 @@ class Tx_Notify_Service_NotificationService extends Tx_Notify_Service_AbstractSe
 	 * @return boolean
 	 */
 	public function sendSubscribedNotificationsToSubscriber($subscriber, Traversable $subscriptions) {
-		$typoScriptSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$typoScriptSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$typoScriptSettings = $typoScriptSettings['plugin.']['tx_notify.']['settings.'];
 		$messageType = isset($typoScriptSettings['email.']['class']) ? $typoScriptSettings['email.']['class'] : 'Tx_Notify_Message_FluidEmail';
 		try {
 			/** @var $message Tx_Notify_Message_FluidEmail */
-			$message = $this->objectManager->create($messageType);
+			$message = $this->objectManager->get($messageType);
 			$message->setRecipient($subscriber);
 			$message->setBody($typoScriptSettings['email.']['template.']['templatePathAndFilename'], TRUE);
 			$message->assign('subscriptions', $subscriptions);
@@ -60,7 +61,7 @@ class Tx_Notify_Service_NotificationService extends Tx_Notify_Service_AbstractSe
 			$message->setType(Tx_Notify_Message_MessageInterface::TYPE_HTML);
 			return $message->send();
 		} catch (Exception $error) {
-			t3lib_div::sysLog($error->getMessage(), 'notify', t3lib_div::SYSLOG_SEVERITY_ERROR);
+			GeneralUtility::sysLog($error->getMessage(), 'notify', GeneralUtility::SYSLOG_SEVERITY_ERROR);
 			return FALSE;
 		}
 	}
@@ -72,7 +73,7 @@ class Tx_Notify_Service_NotificationService extends Tx_Notify_Service_AbstractSe
 	 * @return boolean
 	 */
 	public function sendNotifications(Tx_Notify_Subscription_SourceProviderInterface $sourceProvider) {
-		$typoScriptSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		$typoScriptSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$typoScriptSettings = $typoScriptSettings['plugin.']['tx_notify.']['settings.'];
 		$subscriptions = $sourceProvider->getSubscriptions();
 		$triggeredSubscriptions = $this->subscriptionService->buildUpdatedContentObjects($subscriptions, TRUE);
@@ -84,7 +85,7 @@ class Tx_Notify_Service_NotificationService extends Tx_Notify_Service_AbstractSe
 				/** @var $subscription Tx_Notify_Domain_Model_Subscription */
 				$subscriber = $subscription->getSubscriber();
 				/** @var $message Tx_Notify_Message_FluidEmail */
-				$message = $this->objectManager->create($messageType);
+				$message = $this->objectManager->get($messageType);
 				$message->setRecipient($subscriber);
 				$message->assign('subscriptions', array($subscription));
 				$message->assign('subscriber', $subscriber);
@@ -93,7 +94,7 @@ class Tx_Notify_Service_NotificationService extends Tx_Notify_Service_AbstractSe
 				$message->send();
 				$sent++;
 			} catch (Exception $error) {
-				t3lib_div::sysLog($error->getMessage(), 'Notify', t3lib_div::SYSLOG_SEVERITY_ERROR);
+				GeneralUtility::sysLog($error->getMessage(), 'Notify', GeneralUtility::SYSLOG_SEVERITY_ERROR);
 			}
 		}
 		return $sent === $total;

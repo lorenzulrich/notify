@@ -36,7 +36,7 @@
  *
  * @author Claus Due <claus@wildside.dk>
  */
-class Tx_Notify_Controller_SubscriptionControllerTest extends Tx_Extbase_Tests_Unit_BaseTestCase {
+class Tx_Notify_Controller_SubscriptionControllerTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * @var Tx_Notify_Domain_Model_Subscription
 	 */

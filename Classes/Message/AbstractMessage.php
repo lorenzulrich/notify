@@ -67,12 +67,12 @@ class Tx_Notify_Message_AbstractMessage {
 	);
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
@@ -82,16 +82,16 @@ class Tx_Notify_Message_AbstractMessage {
 	protected $emailService;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
@@ -284,7 +284,7 @@ class Tx_Notify_Message_AbstractMessage {
 	public function prepare() {
 		$body = $this->body;
 		if ($this->bodyIsFilePathAndFilename === TRUE) {
-			$templatePathAndFilename = t3lib_div::getFileAbsFileName($body);
+			$templatePathAndFilename = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($body);
 			if (file_exists($templatePathAndFilename) === FALSE) {
 				throw new Exception('Email template file "' . $templatePathAndFilename . '" not found - file does not exist', 1334865912);
 			}
@@ -298,7 +298,7 @@ class Tx_Notify_Message_AbstractMessage {
 				$content = str_replace('###' . $name . '###' , $value, $content);
 			}
 		} else {
-			$typoScriptSettings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+			$typoScriptSettings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 			$settings = Tx_Flux_Utility_Array::convertTypoScriptArrayToPlainArray($typoScriptSettings['plugin.']['tx_notify.']['settings.']);
 			$paths = Tx_Flux_Utility_Path::translatePath($settings['email']['view']);
 			$className = get_class($this);
@@ -308,17 +308,17 @@ class Tx_Notify_Message_AbstractMessage {
 				$classNameSegments = explode('_', $className);
 			}
 			$extensionName = $classNameSegments[1];
-			/** @var $request Tx_Extbase_MVC_Web_Request */
-			$request = $this->objectManager->create('Tx_Extbase_MVC_Web_Request');
+			/** @var $request \TYPO3\CMS\Extbase\Mvc\Web\Request */
+			$request = $this->objectManager->get('TYPO3\CMS\Extbase\Mvc\Web\Request');
 			$request->setControllerExtensionName($extensionName);
-			/** @var $controllerContext Tx_Extbase_MVC_Controller_ControllerContext */
-			$controllerContext = $this->objectManager->create('Tx_Extbase_MVC_Controller_ControllerContext');
+			/** @var $controllerContext \TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext*/
+			$controllerContext = $this->objectManager->get('TYPO3\CMS\Extbase\Mvc\Controller\ControllerContext');
 			$controllerContext->setRequest($request);
 			/** @var $template Tx_Flux_MVC_View_ExposedStandaloneView */
 			$this->variables['attachments'] = $this->attachments;
 			$this->variables['recipient'] = $this->recipient;
 			$this->variables['settings'] = $settings;
-			$template = $this->objectManager->create('Tx_Flux_MVC_View_ExposedStandaloneView');
+			$template = $this->objectManager->get('Tx_Flux_MVC_View_ExposedStandaloneView');
 			$template->setControllerContext($controllerContext);
 			$template->setFormat('eml');
 			$template->assignMultiple($this->variables);

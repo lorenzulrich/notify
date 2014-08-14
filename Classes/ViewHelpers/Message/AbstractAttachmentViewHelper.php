@@ -1,11 +1,6 @@
 <?php
 
-
-#require_once PATH_typo3 . 'contrib/swiftmailer/classes/Swift.php';
-require_once(PATH_typo3 . 'contrib/swiftmailer/swift_required.php');
-#Swift::registerAutoload(NULL);
-
-class Tx_Notify_ViewHelpers_Message_AbstractAttachmentViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractTagBasedViewHelper {
+class Tx_Notify_ViewHelpers_Message_AbstractAttachmentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractTagBasedViewHelper {
 
 	/**
 	 * Embed a file (return the Content Id it receives or use custom ID)
@@ -22,10 +17,10 @@ class Tx_Notify_ViewHelpers_Message_AbstractAttachmentViewHelper extends Tx_Flui
 	}
 
 	/**
-	 * @param Swift_Mime_MimeEntity $file
+	 * @param \Swift_Mime_MimeEntity $attachment
 	 * @return void
 	 */
-	protected function attach(Swift_Mime_MimeEntity $attachment) {
+	protected function attach(\Swift_Mime_MimeEntity $attachment) {
 		$id = $attachment->getId();
 		$media = array();
 		if ($this->viewHelperVariableContainer->exists('Tx_Notify_ViewHelpers_Message_AbstractAttachmentViewHelper', 'media') === TRUE) {
@@ -37,12 +32,12 @@ class Tx_Notify_ViewHelpers_Message_AbstractAttachmentViewHelper extends Tx_Flui
 
 	/**
 	 * @param string $file
-	 * @return Swift_Mime_MimeEntity
+	 * @return \Swift_Mime_MimeEntity
 	 */
 	protected function createAttachmentObject($file) {
-		$file = t3lib_div::getFileAbsFileName($file);
+		$file = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($file);
 		$id = $this->createId($file);
-		$attachment = Swift_Attachment::fromPath($file);
+		$attachment = \Swift_Attachment::fromPath($file);
 			// Note: disposition is used to instruct the message compiler what to do
 			// with the attachment - values are "download", "inline" and "inline-image"
 		$attachment->setDisposition('download');

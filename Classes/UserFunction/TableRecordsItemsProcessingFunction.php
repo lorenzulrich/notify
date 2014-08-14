@@ -42,7 +42,7 @@ class Tx_Notify_UserFunction_TableRecordsItemsProcessingFunction {
 		}
 		global $TCA;
 		$control = $TCA[$params['row']['source_table']]['ctrl'];
-		$dynamicConfigurationFile = t3lib_div::getFileAbsFileName($control['dynamicConfigFile']);
+		$dynamicConfigurationFile = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($control['dynamicConfigFile']);
 		if (file_exists($dynamicConfigurationFile)) {
 			require_once $dynamicConfigurationFile;
 		}

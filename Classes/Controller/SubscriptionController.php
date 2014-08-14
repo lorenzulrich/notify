@@ -28,7 +28,7 @@
  * @subpackage Controller
  * @route NoMatch('bypass')
  */
-class Tx_Notify_Controller_SubscriptionController extends Tx_Extbase_MVC_Controller_ActionController {
+class Tx_Notify_Controller_SubscriptionController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
 
 	/**
 	 * @var Tx_Notify_Service_ConfigurationService
@@ -128,7 +128,7 @@ class Tx_Notify_Controller_SubscriptionController extends Tx_Extbase_MVC_Control
 		$subscriber = $this->subscriptionService->getSourceProviderInstance($this->configurationService->getConfiguration())->getSubscriber();
 		if ($subscriber) {
 			if ($subscription) {
-				$subscriptions = $this->objectManager->create('Tx_Extbase_Persistence_ObjectStorage');
+				$subscriptions = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\ObjectStorage');
 				$subscriptions->attach($subscription);
 			} else {
 				$subscriptions = $this->subscriptionRepository->findBySubscriber($subscriber);

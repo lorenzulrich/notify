@@ -5,7 +5,7 @@ interface Tx_Notify_Poller_PollerInterface {
 	 * @abstract
 	 * @param Tx_Notify_Domain_Model_Subscription $subscription
 	 * @param boolean $rewriteChecksums
-	 * @return Tx_Extbase_Persistence_ObjectStorage
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
 	 */
 	public function getUpdatedObjects(Tx_Notify_Domain_Model_Subscription &$subscription, $rewriteChecksums=FALSE);
 
