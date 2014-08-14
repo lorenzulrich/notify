@@ -35,12 +35,12 @@ class Tx_Notify_Service_SubscriptionService extends Tx_Notify_Service_AbstractSe
 	protected $configurationService;
 
 	/**
-	 * @var Tx_Fed_Service_Json
+	 * @var \Tx_Notify_Service_Json
 	 */
 	protected $jsonService;
 
 	/**
-	 * @var Tx_Extbase_Persistence_ManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface
 	 */
 	protected $persistenceManager;
 
@@ -52,16 +52,16 @@ class Tx_Notify_Service_SubscriptionService extends Tx_Notify_Service_AbstractSe
 	}
 
 	/**
-	 * @param Tx_Fed_Service_Json $jsonService
+	 * @param \Tx_Notify_Service_Json $jsonService
 	 */
-	public function injectJsonService(Tx_Fed_Service_Json $jsonService) {
+	public function injectJsonService(\Tx_Notify_Service_Json $jsonService) {
 		$this->jsonService = $jsonService;
 	}
 
 	/**
-	 * @param Tx_Extbase_Persistence_ManagerInterface $persistenceManager
+	 * @param \TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $persistenceManager
 	 */
-	public function injectPersistenceManager(Tx_Extbase_Persistence_ManagerInterface $persistenceManager) {
+	public function injectPersistenceManager(\TYPO3\CMS\Extbase\Persistence\PersistenceManagerInterface $persistenceManager) {
 		$this->persistenceManager = $persistenceManager;
 	}
 
@@ -166,7 +166,7 @@ class Tx_Notify_Service_SubscriptionService extends Tx_Notify_Service_AbstractSe
 	/**
 	 * Gets all active subscriptions from Repository
 	 *
-	 * @return Tx_Extbase_Persistence_QueryResultInterface
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
 	public function getAllActiveSubscriptions() {
 		$query = $this->subscriptionRepository->createQuery();
@@ -180,11 +180,11 @@ class Tx_Notify_Service_SubscriptionService extends Tx_Notify_Service_AbstractSe
 	/**
 	 * @param Iterator $subscriptions
 	 * @param boolean $rewriteChecksums
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Notify_Domain_Model_Subscription>
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_Notify_Domain_Model_Subscription>
 	 */
 	public function buildUpdatedContentObjects(Iterator $subscriptions, $rewriteChecksums=FALSE) {
-		/** @var Tx_Extbase_Persistence_ObjectStorage $objectStorage */
-		$objectStorage = $this->objectManager->create('Tx_Extbase_Persistence_ObjectStorage');
+		/** @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage $objectStorage */
+		$objectStorage = $this->objectManager->get('TYPO3\CMS\Extbase\Persistence\ObjectStorage');
 		foreach ($subscriptions as $subscription) {
 			/** @var Tx_Notify_Domain_Model_Subscription $subscription */
 			/** @var Tx_Notify_Poller_PollerInterface $poller  */
@@ -205,11 +205,11 @@ class Tx_Notify_Service_SubscriptionService extends Tx_Notify_Service_AbstractSe
 	public function resolvePollerForSubscription(Tx_Notify_Domain_Model_Subscription $subscription) {
 		switch ($subscription->getMode()) {
 			case Tx_Notify_Subscription_StandardSourceProvider::MODE_FILE:
-				return $this->objectManager->create('Tx_Notify_Poller_FilePoller');
+				return $this->objectManager->get('Tx_Notify_Poller_FilePoller');
 			case Tx_Notify_Subscription_StandardSourceProvider::MODE_RECORD:
-				return $this->objectManager->create('Tx_Notify_Poller_RecordPoller');
+				return $this->objectManager->get('Tx_Notify_Poller_RecordPoller');
 			case Tx_Notify_Subscription_StandardSourceProvider::MODE_PAGE:
-				return $this->objectManager->create('Tx_Notify_Poller_PageContentPoller');
+				return $this->objectManager->get('Tx_Notify_Poller_PageContentPoller');
 			default:
 				return NULL;
 		}

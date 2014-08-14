@@ -71,7 +71,7 @@ interface Tx_Notify_Subscription_SourceProviderInterface {
 	 * Get all Subscriptions that apply to this Provider
 	 *
 	 * @abstract
-	 * @return Tx_Extbase_Persistence_QueryResultInterface
+	 * @return \TYPO3\CMS\Extbase\Persistence\QueryResultInterface
 	 */
 	public function getSubscriptions();
 

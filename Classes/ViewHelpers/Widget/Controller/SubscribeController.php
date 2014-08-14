@@ -186,7 +186,7 @@ class Tx_Notify_ViewHelpers_Widget_Controller_SubscribeController extends Tx_Flu
 		$this->view->assign('source', $this->source);
 		$this->view->assign('settings', $this->widgetConfiguration['settings']);
 		$this->view->assign('modes', explode(',', $this->widgetConfiguration['settings']['source']['modes']));
-		$this->view->assign('radioName', t3lib_div::getRandomHexString(8));
+		$this->view->assign('radioName', \TYPO3\CMS\Core\Utility\GeneralUtility::getRandomHexString(8));
 		$this->view->assign('toggleImage', $isSubscribed ? $images['subscribed'] : $images['unsubscribed']);
 		$this->view->assign('toggleImageAlt', $isSubscribed ? $images['unsubscribed'] : $images['subscribed']);
 		$this->view->assign('toggleLinkText', $isSubscribed ? $linkTexts['subscribed'] : $linkTexts['unsubscribed']);

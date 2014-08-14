@@ -18,12 +18,12 @@ class Tx_Notify_ViewHelpers_Message_EmbedViewHelper extends Tx_Notify_ViewHelper
 
 	/**
 	 * @param string $file
-	 * @return Swift_Attachment
+	 * @return \Swift_Attachment
 	 */
 	protected function createAttachmentObject($file) {
-		$file = t3lib_div::getFileAbsFileName($file);
+		$file = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($file);
 		$id = $this->createId($file);
-		$attachment = Swift_Attachment::fromPath($file);
+		$attachment = \Swift_Attachment::fromPath($file);
 		$attachment->setId($id);
 		$attachment->setDisposition('inline');
 		return $attachment;

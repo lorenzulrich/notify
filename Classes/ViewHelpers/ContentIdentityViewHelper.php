@@ -27,7 +27,7 @@
  * @package Notify
  * @subpackage ViewHelpers
  */
-class Tx_Notify_ViewHelpers_ContentIdentityViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_Notify_ViewHelpers_ContentIdentityViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @param Tx_Notify_Domain_Model_Subscription $subscription
@@ -89,7 +89,7 @@ class Tx_Notify_ViewHelpers_ContentIdentityViewHelper extends Tx_Fluid_Core_View
 		}
 		$title = isset($record[$label]) ? $record[$label] : NULL;
 		if (empty($title) === TRUE) {
-			$title = '&lt;No title&gt; <small>' . Tx_Extbase_Utility_Localization::translate($recordTypeTitle) . '</small>';
+			$title = '&lt;No title&gt; <small>' . \TYPO3\CMS\Extbase\Utility\LocalizationUtility::translate($recordTypeTitle, 'notify') . '</small>';
 		}
 		return $title;
 	}

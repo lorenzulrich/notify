@@ -30,12 +30,12 @@
 abstract class Tx_Notify_Service_AbstractService {
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
@@ -45,21 +45,21 @@ abstract class Tx_Notify_Service_AbstractService {
 	protected $subscriptionRepository;
 
 	/**
-	 * @var Tx_Fed_Service_Email
+	 * @var \Tx_Notify_Service_Email
 	 */
 	protected $emailService;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
@@ -71,9 +71,9 @@ abstract class Tx_Notify_Service_AbstractService {
 	}
 
 	/**
-	 * @param Tx_Fed_Service_Email $emailService
+	 * @param \Tx_Notify_Service_Email $emailService
 	 */
-	public function injectEmailService(Tx_Fed_Service_Email $emailService) {
+	public function injectEmailService(\Tx_Notify_Service_Email $emailService) {
 		$this->emailService = $emailService;
 	}
 	

@@ -1,5 +1,5 @@
 {namespace notify=Tx_Notify_ViewHelpers}
-{namespace fed=Tx_Fed_ViewHelpers}
+{namespace v=Tx_Vhs_ViewHelpers}
 <f:layout name="Default" />
 
 <f:section name="Main">
@@ -7,7 +7,7 @@
 <f:if condition="{subscriptions}">
 	<f:then>
 		<f:for each="{subscriptions}" as="subscription">
-			<fed:data.var name="mostRecentUpdate" value="{fed:data.func(func: 'current', instance: subscription.updates)}" />
+			<notify:data.var name="mostRecentUpdate" value="{notify:data.func(func: 'current', instance: subscription.updates)}" />
 			<f:if condition="{settings.display.timeline.disableControls} < 1">
 				<f:link.action action="reset" style="float: right;" title="Hide this update" rel="tooltip" class="btn btn-small" arguments="{subscription: subscription.uid}"><span class="icon icon-eye-close"></span></f:link.action>
 			</f:if>
@@ -50,13 +50,13 @@
 
 <f:section name="ContentElement">
 	<f:link.page pageUid="{object.pid}">
-		<fed:data.var name="contentType"><notify:contentType record="{object}" /></fed:data.var>
+		<notify:data.var name="contentType"><notify:contentType record="{object}" /></notify:data.var>
 		<f:translate key="{contentType}" default="{contentType}" />
 	</f:link.page>
 </f:section>
 
 <f:section name="ItemType0">
-	<fed:comment comment="Type: Page" />
+	<f:comment comment="Type: Page" />
 	<p><strong>Updated content elements:</strong></p>
 	<ul>
 	<f:for each="{subscription.updates}" as="updatedObject" iteration="iteration">
@@ -72,17 +72,17 @@
 </f:section>
 
 <f:section name="ItemType1">
-	<fed:comment comment="Type: Record" />
-	<fed:switch value="{subscription.sourceTable}">
-		<fed:case case="tt_content" break="TRUE">
+	<f:comment comment="Type: Record" />
+	<v:switch value="{subscription.sourceTable}">
+		<v:case case="tt_content" break="TRUE">
 			<f:render section="ContentElement" arguments="{object: mostRecentUpdate.data}" />
-		</fed:case>
-		<fed:case case="default" break="TRUE">
+		</v:case>
+		<v:case case="default" break="TRUE">
 			<em><notify:ucfirst><notify:contentExtract subscription="{subscription}" object="{mostRecentUpdate}" /></notify:ucfirst></em>
-		</fed:case>
-	</fed:switch>
+		</v:case>
+	</v:switch>
 </f:section>
 
 <f:section name="ItemType2">
-	<fed:comment comment="Type: File/Resource" />
+	<f:comment comment="Type: File/Resource" />
 </f:section>

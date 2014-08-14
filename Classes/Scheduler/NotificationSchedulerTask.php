@@ -22,6 +22,7 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Notification Scheduler Task
@@ -43,11 +44,11 @@ class Tx_Notify_Scheduler_NotificationSchedulerTask extends Tx_Notify_Scheduler_
 	 * CONSTRUCTOR
 	 */
 	public function __construct() {
-		/** @var Tx_Extbase_Object_ObjectManager $objectManager */
-		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-		/** @var Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager */
-		$configurationManager = $objectManager->get('Tx_Extbase_Configuration_ConfigurationManagerInterface');
-		$typoScript = $configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+		/** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+		$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
+		/** @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager */
+		$configurationManager = $objectManager->get('\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface');
+		$typoScript = $configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 		$this->settings = $this->convertTypoScriptArrayToPlainArray($typoScript['plugin.']['tx_notify.']['settings.']);
 		parent::__construct();
 	}
@@ -62,8 +63,8 @@ class Tx_Notify_Scheduler_NotificationSchedulerTask extends Tx_Notify_Scheduler_
 	 * @return boolean Returns TRUE on successful execution, FALSE on error
 	 */
 	public function execute() {
-		/** @var Tx_Extbase_Object_ObjectManager $objectManager */
-		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		/** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+		$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 		/** @var Tx_Notify_Service_SubscriptionService $subscriptionService */
 		$subscriptionService = $objectManager->get('Tx_Notify_Service_SubscriptionService');
 		$subscriptionSourceProvider = $subscriptionService->getSourceProviderInstance($this->settings);
@@ -92,7 +93,7 @@ class Tx_Notify_Scheduler_NotificationSchedulerTask extends Tx_Notify_Scheduler_
 					$subscriptionService->update($subscription);
 				}
 			} catch (Exception $error) {
-				t3lib_div::sysLog($error->getMessage(), 'Notify', 2);
+				GeneralUtility::sysLog($error->getMessage(), 'Notify', 2);
 			}
 		}
 		return TRUE;
@@ -104,8 +105,8 @@ class Tx_Notify_Scheduler_NotificationSchedulerTask extends Tx_Notify_Scheduler_
 	 * @return string
 	 */
 	public function getAdditionalInformation() {
-		/** @var Tx_Extbase_Object_ObjectManager $objectManager */
-		$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
+		/** @var \TYPO3\CMS\Extbase\Object\ObjectManager $objectManager */
+		$objectManager = GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Object\ObjectManager');
 		/** @var Tx_Notify_Service_SubscriptionService $subscriptionService */
 		$subscriptionService = $objectManager->get('Tx_Notify_Service_SubscriptionService');
 		$providerName = $this->settings['source']['provider'];

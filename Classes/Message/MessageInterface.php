@@ -55,13 +55,13 @@ interface Tx_Notify_Message_MessageInterface {
 
 	/**
 	 * @abstract
-	 * @param Swift_Mime_MimeEntity[] $attachments
+	 * @param \Swift_Mime_MimeEntity[] $attachments
 	 */
 	public function setAttachments(array $attachments);
 
 	/**
 	 * @abstract
-	 * @return Swift_Mime_MimeEntity[]
+	 * @return \Swift_Mime_MimeEntity[]
 	 */
 	public function getAttachments();
 

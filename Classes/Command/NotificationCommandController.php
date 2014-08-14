@@ -27,7 +27,7 @@
  * @package Notify
  * @subpackage Command
  */
-class Tx_Notify_Command_NotificationCommandController extends Tx_Extbase_MVC_Controller_CommandController {
+class Tx_Notify_Command_NotificationCommandController extends \TYPO3\CMS\Extbase\Mvc\Controller\CommandController {
 
 	/**
 	 * @var Tx_Notify_Service_SubscriptionService
@@ -103,7 +103,7 @@ class Tx_Notify_Command_NotificationCommandController extends Tx_Extbase_MVC_Con
 				$subscriber = $subscription->getSubscriber();
 				$this->write('     - ' . $subscriber, TRUE, TRUE);
 				if (isset($allSubscriptionsBySubscriber[$subscriber]) === FALSE) {
-					$allSubscriptionsBySubscriber[$subscriber] = new Tx_Extbase_Persistence_ObjectStorage();
+					$allSubscriptionsBySubscriber[$subscriber] = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 				}
 				if ($allSubscriptionsBySubscriber[$subscriber]->contains($subscription) === FALSE) {
 					$allSubscriptionsBySubscriber[$subscriber]->attach($subscription);
@@ -113,7 +113,7 @@ class Tx_Notify_Command_NotificationCommandController extends Tx_Extbase_MVC_Con
 		$this->write('-> Analyzing Subscriptions for individual Subscribers [' . count($allSubscriptionsBySubscriber) . ' subscribers]:', TRUE, TRUE);
 		foreach ($allSubscriptionsBySubscriber as $subscriber => $subscriptions) {
 			$this->write('   * ' . $subscriber . ' [' . $subscriptions->count() . ' subscriptions]', TRUE, TRUE);
-			$subscriptionsWithUpdates = new Tx_Extbase_Persistence_ObjectStorage();
+			$subscriptionsWithUpdates = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 			foreach ($subscriptions as $subscription) {
 				$poller = $this->subscriptionService->resolvePollerForSubscription($subscription);
 				$updates = $poller->getUpdatedObjects($subscription, TRUE);

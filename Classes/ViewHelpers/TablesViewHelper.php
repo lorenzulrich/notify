@@ -27,7 +27,7 @@
  * @package Notify
  * @subpackage ViewHelpers
  */
-class Tx_Notify_ViewHelpers_TablesViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+class Tx_Notify_ViewHelpers_TablesViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 * @return array

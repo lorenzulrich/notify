@@ -27,7 +27,7 @@
  * @package Notify
  * @subpackage Domain/Model
  */
-class Tx_Notify_Domain_Model_UpdatedObject extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Notify_Domain_Model_UpdatedObject extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * @var integer

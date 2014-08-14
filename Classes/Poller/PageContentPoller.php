@@ -4,10 +4,10 @@ class Tx_Notify_Poller_PageContentPoller extends Tx_Notify_Poller_AbstractPoller
 	/**
 	 * @param Tx_Notify_Domain_Model_Subscription $subscription
 	 * @param boolean $rewriteChecksums
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject>
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject>
 	 */
 	public function getUpdatedObjects(Tx_Notify_Domain_Model_Subscription &$subscription, $rewriteChecksums=FALSE) {
-		$objectStorage = t3lib_div::makeInstance('Tx_Extbase_Persistence_ObjectStorage');
+		$objectStorage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\CMS\Extbase\Persistence\ObjectStorage');
 		$pageUid = $subscription->getSourceUid();
 		$contentElements = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'tt_content', "pid = '" . $pageUid . "'");
 		$checksumParts = array();
@@ -38,7 +38,7 @@ class Tx_Notify_Poller_PageContentPoller extends Tx_Notify_Poller_AbstractPoller
 	 * @return string
 	 */
 	public function calculateChecksum(Tx_Notify_Domain_Model_Subscription &$subscription, $record) {
-		$fields = t3lib_div::trimExplode(',', $subscription->getSourceFields());
+		$fields = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $subscription->getSourceFields());
 		if ($subscription->getSourceFields() !== '' && count($fields) > 0) {
 			$values = array();
 			foreach ($fields as $field) {

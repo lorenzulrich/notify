@@ -27,7 +27,7 @@
  * @package Notify
  * @subpackage Domain/Model
  */
-class Tx_Notify_Domain_Model_Subscription extends Tx_Extbase_DomainObject_AbstractEntity {
+class Tx_Notify_Domain_Model_Subscription extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity {
 
 	/**
 	 * Subscription mode
@@ -96,7 +96,7 @@ class Tx_Notify_Domain_Model_Subscription extends Tx_Extbase_DomainObject_Abstra
 	protected $url;
 
 	/**
-	 * @var Tx_Extbase_Persistence_ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject>
+	 * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject>
 	 */
 	protected $updates;
 
@@ -104,7 +104,7 @@ class Tx_Notify_Domain_Model_Subscription extends Tx_Extbase_DomainObject_Abstra
 	 * @return void
 	 */
 	public function __construct() {
-		$this->updates = new Tx_Extbase_Persistence_ObjectStorage();
+		$this->updates = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 	}
 
 	/**
@@ -250,19 +250,19 @@ class Tx_Notify_Domain_Model_Subscription extends Tx_Extbase_DomainObject_Abstra
 	}
 
 	/**
-	 * @return Tx_Extbase_Persistence_ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject>
+	 * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject>
 	 */
 	public function getUpdates() {
 		if (!$this->updates) {
-			$this->updates = new Tx_Extbase_Persistence_ObjectStorage();
+			$this->updates = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
 		}
 		return $this->updates;
 	}
 
 	/**
-	 * @param Tx_Extbase_Persistence_ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject> $updates
+	 * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<Tx_Notify_Domain_Model_UpdatedObject> $updates
 	 */
-	public function setUpdates(Tx_Extbase_Persistence_ObjectStorage $updates) {
+	public function setUpdates(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $updates) {
 		$this->updates = $updates;
 	}
 

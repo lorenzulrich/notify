@@ -31,7 +31,7 @@
  * @package Notify
  * @subpackage Service
  */
-class Tx_Notify_Service_EmailService implements t3lib_Singleton, Tx_Notify_Message_DeliveryServiceInterface {
+class Tx_Notify_Service_EmailService implements \TYPO3\CMS\Core\SingletonInterface, Tx_Notify_Message_DeliveryServiceInterface {
 
 	/**
 	 * @var array
@@ -39,26 +39,26 @@ class Tx_Notify_Service_EmailService implements t3lib_Singleton, Tx_Notify_Messa
 	protected $configuration = array();
 
 	/**
-	 * @var Tx_Extbase_Object_ObjectManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
-	 * @var Tx_Extbase_Configuration_ConfigurationManagerInterface
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
 	protected $configurationManager;
 
 	/**
-	 * @param Tx_Extbase_Object_ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
-	public function injectObjectManager(Tx_Extbase_Object_ObjectManagerInterface $objectManager) {
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
 	}
 
 	/**
-	 * @param Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 */
-	public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManagerInterface $configurationManager) {
+	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 
@@ -67,10 +67,8 @@ class Tx_Notify_Service_EmailService implements t3lib_Singleton, Tx_Notify_Messa
 	 *
 	 * @param mixed $subject
 	 * @param mixed $body
-	 * @param mixed $recipientEmail
-	 * @param mixed $recipientName
-	 * @param mixed $fromEmail
-	 * @param mixed $fromName
+	 * @param $recipient
+	 * @param $sender
 	 * @return integer the number of recipients who were accepted for delivery
 	 * @api
 	 */
@@ -92,7 +90,7 @@ class Tx_Notify_Service_EmailService implements t3lib_Singleton, Tx_Notify_Messa
 	 * @api
 	 */
 	public function getMailer() {
-		$mailer = new t3lib_mail_Message();
+		$mailer = new \TYPO3\CMS\Core\Mail\MailMessage();
 		return $mailer;
 	}
 
@@ -100,6 +98,7 @@ class Tx_Notify_Service_EmailService implements t3lib_Singleton, Tx_Notify_Messa
 	 * Sends a Message-interface-implementing Message through Email routes
 	 *
 	 * @param Tx_Notify_Message_MessageInterface $message The message to send
+	 * @throws Exception
 	 * @return boolean
 	 */
 	public function send(Tx_Notify_Message_MessageInterface $message) {
@@ -142,7 +141,7 @@ class Tx_Notify_Service_EmailService implements t3lib_Singleton, Tx_Notify_Messa
 
 		$attachments = (array) $message->getAttachments();
 		foreach ($attachments as $attachment) {
-			if ($attachment instanceof Swift_Image || $attachment instanceof Swift_EmbeddedFile) {
+			if ($attachment instanceof \Swift_Image || $attachment instanceof \Swift_EmbeddedFile) {
 				$disposition = $attachment->getDisposition();
 			} else {
 				$disposition = 'attachment';
@@ -195,7 +194,7 @@ class Tx_Notify_Service_EmailService implements t3lib_Singleton, Tx_Notify_Messa
 	 */
 	protected function getComponentConfiguration() {
 		if (count($this->configuration) === 0) {
-			$settings = $this->configurationManager->getConfiguration(Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+			$settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
 			$this->configuration  = $this->typoScriptArrayToPlainArray($settings['plugin.']['tx_notify.']['settings.']);
 		}
 		return $this->configuration;
